@@ -231,3 +231,138 @@ while not done:
 env.close()
 pygame.quit()
 ```
+
+# Acrobot-v1 Environment (OpenAI Gymnasium)
+
+## 🧠 What is Acrobot-v1?
+
+**Acrobot-v1** is a classic control problem provided by the OpenAI Gymnasium library. It simulates a **two-link pendulum** with one actuator at the joint. The challenge is to **swing the lower link’s tip high enough** to reach a goal height above the base.
+
+---
+
+## 🎯 Goal
+
+To swing the Acrobot such that the **tip of the lower link** reaches a height equal to the length of one link **above the base** (i.e., tip_y ≥ 1.0).
+
+---
+
+## 🕹️ Actions
+
+The environment uses a **discrete action space** with 3 possible actions:
+- `0` → Apply **-1 torque**
+- `1` → Apply **0 torque** (no movement)
+- `2` → Apply **+1 torque**
+
+---
+
+## 🔢 Observations
+
+Each state/observation is a **6-dimensional vector** representing:
+- Cosine of first joint angle
+- Sine of first joint angle
+- Cosine of second joint angle
+- Sine of second joint angle
+- Angular velocity of first joint
+- Angular velocity of second joint
+
+---
+
+## 💰 Rewards
+
+- **-1** per timestep until the goal is reached
+- No positive reward; the goal is to **minimize the number of steps**
+
+---
+
+## 🧪 Episode Termination
+
+The episode ends when:
+- The tip of the lower link reaches a vertical position ≥ 1.0 (`terminated=True`)
+- OR the time limit is reached (`truncated=True`)
+
+---
+
+## 📜 Code Overview
+
+```python
+import gymnasium as gym
+
+env = gym.make("Acrobot-v1", render_mode="human")
+obs, _ = env.reset()
+
+for _ in range(500):
+    action = env.action_space.sample()
+    obs, reward, terminated, truncated, _ = env.step(action)
+    if terminated or truncated:
+        obs, _ = env.reset()
+
+env.close()
+```
+
+# 🚗 CarRacing-v3 Environment (OpenAI Gymnasium)
+
+## 🧠 What is CarRacing-v3?
+
+**CarRacing-v3** is a continuous control environment from OpenAI Gymnasium where the agent learns to drive a car on procedurally generated tracks. It’s widely used to test reinforcement learning algorithms in dynamic, high-dimensional visual environments.
+
+---
+
+## 🎯 Goal
+
+To **drive the car along the track as efficiently and accurately as possible**, maximizing total reward and avoiding going off-road.
+
+---
+
+## 🕹️ Action Space
+
+The environment uses a **continuous action space** with 3 values:
+
+[steering, gas, brake]
+
+
+- **Steering**: Range from `-1` (left) to `+1` (right)
+- **Gas**: Range from `0` (no gas) to `1` (full throttle)
+- **Brake**: Range from `0` (no brake) to `1` (full brake)
+
+---
+
+## 🔢 Observations
+
+Each observation is a **96x96 RGB image** (visual input from the car’s front view). The agent learns from pixel data, similar to how a human learns by seeing.
+
+---
+
+## 💰 Rewards
+
+- Positive rewards for staying on track.
+- Negative penalties for driving off the track or idling.
+- Reward is continuous and accumulates throughout the episode.
+
+---
+
+## 🧪 Episode Termination
+
+The episode ends when:
+- The car drives off the track for too long.
+- The car idles or makes no progress.
+- The maximum timestep limit is reached.
+
+---
+
+## 📜 Code Overview
+
+```python
+import gymnasium as gym
+
+env = gym.make("CarRacing-v3", render_mode="human")
+obs, _ = env.reset()
+
+for _ in range(1000):
+    action = env.action_space.sample()
+    obs, reward, terminated, truncated, _ = env.step(action)
+    if terminated or truncated:
+        obs, _ = env.reset()
+
+env.close()
+
+```
