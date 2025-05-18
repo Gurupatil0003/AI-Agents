@@ -176,7 +176,8 @@ The goal is to learn to drive the car efficiently and complete laps without cras
 
 - Domain randomization helps build more generalized RL agents by exposing them to different track layouts.
 - The action space is continuous with three dimensions: `[steer, gas, brake]`.
-```
+  
+```python
 import gym
 import pygame
 from pygame.locals import *
