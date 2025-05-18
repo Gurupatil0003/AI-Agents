@@ -366,3 +366,213 @@ for _ in range(1000):
 env.close()
 
 ```
+
+# 🦿 BipedalWalker-v3 Environment (OpenAI Gymnasium)
+
+## 🧠 What is BipedalWalker-v3?
+
+**BipedalWalker-v3** is a physics-based reinforcement learning environment in OpenAI Gymnasium where a two-legged agent (walker) must learn to walk across a randomly generated terrain.
+
+This environment is widely used to train and evaluate agents in **continuous control tasks**, simulating real-world challenges like walking, balance, and locomotion.
+
+---
+
+## 🎯 Goal
+
+To **learn how to walk and navigate rough terrain** without falling. The agent must control its legs using torque to move forward.
+
+---
+
+## 🕹️ Action Space
+
+- **Type**: Continuous `Box(-1, 1, (4,))`
+- The action is a 4-dimensional vector controlling torque applied to the 4 motor joints:
+
+[hip_1, knee_1, hip_2, knee_2]
+
+
+---
+
+## 🔢 Observation Space
+
+- A **24-dimensional** vector that includes:
+- LIDAR measurements of terrain
+- Velocity and position of the body
+- Joint angles and angular velocities
+
+---
+
+## 💰 Rewards
+
+- **+300** for walking successfully across the terrain.
+- Penalties for falling or not making progress.
+- **Shaped rewards** encourage forward motion, balance, and control.
+
+---
+
+## 🧪 Episode Termination
+
+The episode ends when:
+- The walker **falls** or tips over.
+- The agent reaches the **end of the terrain**.
+- The maximum step limit (1600 steps) is reached.
+
+---
+
+## 📜 Sample Code
+
+```python
+import gymnasium as gym
+
+env = gym.make("BipedalWalker-v3", render_mode="human")
+obs, _ = env.reset()
+
+for _ in range(1000):
+  action = env.action_space.sample()  # Random actions
+  obs, reward, terminated, truncated, _ = env.step(action)
+
+  if terminated or truncated:
+      obs, _ = env.reset()
+
+env.close()
+```
+
+# 🚀 LunarLander-v2 Environment (OpenAI Gymnasium)
+
+## 🌌 What is LunarLander-v2?
+
+**LunarLander-v2** is a classic reinforcement learning environment where the goal is to land a spacecraft safely on the moon’s surface. It simulates a 2D lunar lander module using basic physics, making it perfect for learning control policies.
+
+---
+
+## 🎯 Goal
+
+Control the lander to **safely touch down** on the landing pad between the flags with minimal fuel usage.
+
+---
+
+## 🕹️ Action Space
+
+- **Type**: Discrete (`Discrete(4)`)
+- **Actions**:
+  - `0`: Do nothing
+  - `1`: Fire left engine
+  - `2`: Fire main (bottom) engine
+  - `3`: Fire right engine
+
+---
+
+## 🔢 Observation Space
+
+- **Type**: Continuous `Box(8,)`
+- Includes:
+  - X & Y position
+  - X & Y velocities
+  - Landers angle
+  - Angular velocity
+  - Left and right leg contact indicators (binary)
+
+---
+
+## 💰 Rewards
+
+- **+100 to +140** for a successful landing.
+- **-100** or more for crashing.
+- Small **negative reward** for using engines (fuel penalty).
+- Bonus for keeping the lander upright.
+
+---
+
+## 🧪 Episode Termination
+
+The episode ends if:
+- The lander crashes or flies off-screen.
+- The lander comes to rest.
+- It reaches the maximum number of steps (1000 by default).
+
+---
+
+## 📜 Sample Code
+
+```python
+import gymnasium as gym
+
+env = gym.make("LunarLander-v2", render_mode="human")
+obs, _ = env.reset()
+
+for _ in range(1000):
+    action = env.action_space.sample()  # Random action
+    obs, reward, terminated, truncated, _ = env.step(action)
+
+    if terminated or truncated:
+        obs, _ = env.reset()
+
+env.close()
+```
+
+# 🏔️ MountainCar-v0 Environment (OpenAI Gymnasium)
+
+## 📘 What is MountainCar-v0?
+
+`MountainCar-v0` is a classic control problem in reinforcement learning. The task is to help a car stuck in a valley **reach the top of a mountain** on the right. However, the car’s engine is not strong enough to climb directly, so it must build momentum by swinging back and forth.
+
+---
+
+## 🎯 Goal
+
+Accelerate the car so it gains enough momentum to **reach the goal** (the flag at the top-right).
+
+---
+
+## 🕹️ Action Space
+
+- **Type**: `Discrete(3)`
+- **Actions**:
+  - `0`: Push left
+  - `1`: Do nothing
+  - `2`: Push right
+
+---
+
+## 🔢 Observation Space
+
+- **Type**: `Box(2,)`
+- **Observations**:
+  - `position`: Current position of the car (range: `-1.2` to `0.6`)
+  - `velocity`: Current velocity of the car (range: `-0.07` to `0.07`)
+
+---
+
+## 💰 Rewards
+
+- **-1** per timestep until the goal is reached.
+- No reward for reaching the goal; the goal is **efficiency** (fewer steps).
+
+---
+
+## 🧪 Episode Termination
+
+The episode ends when:
+- The car’s position reaches **0.5** or more (i.e., it reaches the flag).
+- Or after **200 steps**, whichever comes first.
+
+---
+
+## 🧪 Sample Code
+
+```python
+import gymnasium as gym
+
+env = gym.make("MountainCar-v0", render_mode="human")
+obs, _ = env.reset()
+
+for _ in range(200):
+    action = env.action_space.sample()  # Random action
+    obs, reward, terminated, truncated, _ = env.step(action)
+
+    if terminated or truncated:
+        obs, _ = env.reset()
+
+env.close()
+```
+
