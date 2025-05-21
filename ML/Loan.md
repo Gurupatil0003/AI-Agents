@@ -13,3 +13,11 @@ https://poloclub.github.io/cnn-explainer/
 
 https://adamharley.com/nn_vis/cnn/3d.html
 
+
+https://deeplizard.com/resource/pavq7noze2
+
+https://adamharley.com/nn_vis/
+
+https://medium.com/@RaghavPrabhu/cnn-architectures-lenet-alexnet-vgg-googlenet-and-resnet-7c81c017b848
+
+https://medium.com/@draj0718/convolutional-neural-networks-cnn-architectures-explained-716fb197b243
