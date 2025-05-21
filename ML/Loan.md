@@ -10,3 +10,6 @@ https://playground.tensorflow.org/#activation=relu&batchSize=10&dataset=circle&r
 
 
 https://poloclub.github.io/cnn-explainer/
+
+https://adamharley.com/nn_vis/cnn/3d.html
+
