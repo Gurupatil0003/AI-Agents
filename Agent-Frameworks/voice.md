@@ -4,36 +4,25 @@
 ```python
 
 import speech_recognition as sr
-import os
-import webbrowser
 
-def listen_and_execute():
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("🎙️ Speak your command:")
-        recognizer.adjust_for_ambient_noise(source)
-        audio = recognizer.listen(source)
-    
+# Initialize recognizer
+recognizer = sr.Recognizer()
+
+# Use the microphone as source
+with sr.Microphone() as source:
+    print("🎙️ Speak something...")
+    recognizer.adjust_for_ambient_noise(source)
+    audio = recognizer.listen(source)
+
     try:
-        command = recognizer.recognize_google(audio).lower()
-        print("📝 Command:", command)
+        # Recognize speech using Google's API
+        text = recognizer.recognize_google(audio)
+        print("📝 You said:", text)
+    except sr.UnknownValueError:
+        print("❌ Could not understand audio.")
+    except sr.RequestError as e:
+        print("🔌 Could not request results; check your internet connection.", e)
 
-        # Command-based actions
-        if 'open notepad' in command:
-            os.system('notepad')
-        elif 'open google' in command:
-            webbrowser.open('https://www.google.com')
-        elif 'play music' in command:
-            os.system('start spotify')  # or use path to music file
-        elif 'shutdown' in command:
-            os.system('shutdown /s /t 1')
-        else:
-            print("❓ Command not recognized.")
-    
-    except Exception as e:
-        print("⚠️ Error:", e)
-
-listen_and_execute()
 
 
 
