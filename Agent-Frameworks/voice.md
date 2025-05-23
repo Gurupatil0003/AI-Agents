@@ -13,6 +13,7 @@ pip install PyAudio
 pip install pywhatkit
 ```
 
+# Voice to Text
 ```python
 
 import speech_recognition as sr
@@ -40,7 +41,8 @@ with sr.Microphone() as source:
 
 ```
 # Voice Command
-```
+
+```python
 import speech_recognition as sr
 import os
 import webbrowser
@@ -75,6 +77,7 @@ listen_and_execute()
 
 ```
 
+# Web Search
 ```python
 import pywhatkit as kit
 import speech_recognition as sr
