@@ -1,5 +1,17 @@
 # Voice to text
 
+### Install
+```python
+pip install SpeechRecognition
+```
+
+```python
+pip install PyAudio
+```
+
+```python
+pip install pywhatkit
+```
 
 ```python
 
@@ -62,6 +74,26 @@ def listen_and_execute():
 listen_and_execute()
 
 ```
+
+```python
+import pywhatkit as kit
+import speech_recognition as sr
+
+def listen():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Say something...")
+        audio = r.listen(source)
+    return r.recognize_google(audio)
+
+try:
+    query = listen()
+    print("Searching for:", query)
+    kit.search(query)
+except Exception as e:
+    print("Error:", e)
+ ```   
+
 
 ```python
 # Install gTTS
