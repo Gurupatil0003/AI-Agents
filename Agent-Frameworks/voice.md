@@ -1,3 +1,47 @@
+# Voice to text
+
+
+```python
+
+import speech_recognition as sr
+import os
+import webbrowser
+
+def listen_and_execute():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("🎙️ Speak your command:")
+        recognizer.adjust_for_ambient_noise(source)
+        audio = recognizer.listen(source)
+    
+    try:
+        command = recognizer.recognize_google(audio).lower()
+        print("📝 Command:", command)
+
+        # Command-based actions
+        if 'open notepad' in command:
+            os.system('notepad')
+        elif 'open google' in command:
+            webbrowser.open('https://www.google.com')
+        elif 'play music' in command:
+            os.system('start spotify')  # or use path to music file
+        elif 'shutdown' in command:
+            os.system('shutdown /s /t 1')
+        else:
+            print("❓ Command not recognized.")
+    
+    except Exception as e:
+        print("⚠️ Error:", e)
+
+listen_and_execute()
+
+
+
+```
+
+
+
+
 ```python
 # Install gTTS
 !pip install gTTS
