@@ -1,10 +1,4 @@
-https://huggingface.co/allenai/t5-small-next-word-generator-qoogle
-
-https://drive.google.com/file/d/1-1LZlhOgRrwL8dKrwOgBTNZiOWY-tvC2/view?usp=sharing
-
-https://drive.google.com/drive/folders/1CjDrKNRSOoYF-ZXE8LoEIhBMK6tqBFFf
-
-https://drive.google.com/file/d/1-1LZlhOgRrwL8dKrwOgBTNZiOWY-tvC2/view?usp=sharing
+https://drive.google.com/file/d/1Rl2DvmY8Pc-MjWzMM3A4d4lUEMsaPJua/view?usp=sharing
 
 # What is AI Agent
 An AI Agent is an entity that perceives its environment through sensors and acts upon that environment using actuators to achieve specific goals. It operates autonomously, making decisions based on its perceptions, internal state, and knowledge, often using artificial intelligence techniques such as machine learning, reasoning, or planning.
