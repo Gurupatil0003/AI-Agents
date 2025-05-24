@@ -46,7 +46,7 @@ IBM Watson AI Agent is an AI-powered virtual assistant solution built using IBM 
 ---
 
 ## 🏗️ Architecture Overview
-
+```python
 User (via Web/Mobile/Voice/Chat)
           |
     Multi-channel Interface
@@ -62,7 +62,7 @@ Integration Layer (APIs, Webhooks)
 Backend Systems, Databases, 3rd party services
           |
 Analytics & Feedback Loop
-
+```
 
 ---
 
