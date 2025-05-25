@@ -1,0 +1,150 @@
+```python
+ollama run deepseek-r1:1.5b
+```
+
+# Health Assistant
+```python
+from autogen import ConversableAgent, UserProxyAgent
+from datetime import datetime
+
+# Simple in-memory reminder storage
+reminders = []
+
+def add_reminder(reminder_type, details):
+    now = datetime.now()
+    reminders.append((now.strftime("%Y-%m-%d %H:%M:%S"), reminder_type, details))
+
+def list_reminders():
+    if not reminders:
+        return "No reminders yet."
+    response = "Here are your reminders:\n"
+    for i, (time, r_type, details) in enumerate(reminders, 1):
+        response += f"{i}. [{time}] {r_type} - {details}\n"
+    return response
+
+# The system message can guide the agent's behavior
+system_message = """
+You are a helpful healthcare assistant. You can:
+- Add medicine reminders when user says "remind me to take [medicine] at [time]".
+- Schedule doctor appointments when user says "schedule appointment with [doctor] on [date] at [time]".
+- List current reminders when user says "list reminders".
+- Always ask if user wants to add more reminders.
+- End chat when user says "exit".
+"""
+
+llm_config = {
+    "model": "deepseek-r1:1.5b",
+    "base_url": "http://localhost:11434/v1",
+    "api_key": "ollama",
+    "timeout": 120,
+}
+
+health_assistant = ConversableAgent(
+    name="HealthAssistant",
+    llm_config=llm_config,
+    system_message=system_message,
+)
+
+user = UserProxyAgent(
+    name="User",
+    human_input_mode="ALWAYS",
+    max_consecutive_auto_reply=0,
+    code_execution_config={"use_docker": False},
+    is_termination_msg=lambda msg: "exit" in msg.get("content", "").lower(),
+)
+
+def handle_user_message(msg):
+    content = msg.get("content", "").lower()
+    
+    if "remind me to take" in content:
+        # extract medicine name and time with simple parsing (can be improved)
+        try:
+            # naive parsing example: "remind me to take aspirin at 9 am"
+            parts = content.split("remind me to take")[1].strip()
+            medicine, at_time = parts.split(" at ")
+            add_reminder("Medicine", f"{medicine.strip()} at {at_time.strip()}")
+            return f"✅ Got it! Reminder set to take {medicine.strip()} at {at_time.strip()}."
+        except:
+            return "Sorry, I didn't understand the reminder details. Please say: 'remind me to take [medicine] at [time]'."
+    
+    elif "schedule appointment with" in content:
+        try:
+            # naive parse: "schedule appointment with Dr. Smith on 2025-05-25 at 15:00"
+            parts = content.split("schedule appointment with")[1].strip()
+            doctor_part, date_time_part = parts.split(" on ")
+            date_part, time_part = date_time_part.split(" at ")
+            add_reminder("Appointment", f"Doctor {doctor_part.strip()} on {date_part.strip()} at {time_part.strip()}")
+            return f"✅ Appointment scheduled with {doctor_part.strip()} on {date_part.strip()} at {time_part.strip()}."
+        except:
+            return "Sorry, I didn't understand the appointment details. Please say: 'schedule appointment with [doctor] on [date] at [time]'."
+    
+    elif "list reminders" in content:
+        return list_reminders()
+    
+    elif "exit" in content:
+        return "Goodbye! Stay healthy! 👋"
+    
+    else:
+        # fallback: ask agent LLM to respond naturally
+        return health_assistant.generate_reply(messages=[msg], sender=user)
+
+if __name__ == "__main__":
+    print("🩺 HealthCare Assistant started! Type 'exit' to quit.\n")
+    while True:
+        user_input = input("You: ")
+        if user_input.strip().lower() == "exit":
+            print("👋 Chat ended.")
+            break
+        
+        # Create a user message dict as Autogen expects
+        user_msg = {"role": "user", "content": user_input}
+        
+        # Handle message and get reply
+        response = handle_user_message(user_msg)
+        
+        print(f"Assistant: {response}")
+
+
+
+```
+
+# Code Agent
+```python
+from autogen import ConversableAgent, UserProxyAgent
+
+llm_config = {
+    "model": "deepseek-r1:1.5b",
+    "base_url": "http://localhost:11434/v1",
+    "api_key": "ollama",
+    "timeout": 120,
+}
+
+codebuddy = ConversableAgent(
+    name="CodeBuddy",
+    llm_config=llm_config,
+    system_message="You are CodeBuddy, an expert coding assistant. Answer clearly and concisely.",
+)
+
+user = UserProxyAgent(
+    name="User",
+    human_input_mode="ALWAYS",
+    max_consecutive_auto_reply=0,
+    code_execution_config={"use_docker": False},
+    is_termination_msg=lambda msg: "exit" in msg.get("content", "").lower(),
+)
+
+if __name__ == "__main__":
+    print("💬 Start chatting with CodeBuddy! Type your question or 'exit' to quit.\n")
+    
+    while True:
+        # Get user input
+        user_msg = input("👤 You: ")
+        if user_msg.strip().lower() == "exit":
+            print("👋 Chat ended.")
+            break
+        
+        # Send user message to agent
+        user.initiate_chat(codebuddy, message=user_msg)
+
+
+```
