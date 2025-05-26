@@ -1,4 +1,9 @@
 ```python
+ollama delete llama3:8b
+
+```
+
+```python
 ollama run deepseek-r1:1.5b
 ```
 
@@ -148,3 +153,63 @@ if __name__ == "__main__":
 
 
 ```
+
+# LM Studio
+
+# LM Studio (Language Model Studio)
+
+**LM Studio** is a desktop application that allows you to easily run and chat with large language models (LLMs) **locally** on your computer — without needing an internet connection or cloud APIs like OpenAI or Hugging Face.
+
+---
+
+## 🔍 Key Features of LM Studio
+
+### ✅ Run Models Locally
+- Load and run LLMs such as **LLaMA**, **Mistral**, **Gemma**, **Phi**, **TinyLlama**, etc., directly on your **CPU or GPU**.
+- No need for cloud access or an internet connection.
+
+### 💬 Chat Interface
+- Comes with a clean and simple UI to chat with LLMs.
+- Easily switch between models.
+
+### 🧩 Use Your Own Models
+- Supports the **GGUF format** (used by `llama.cpp` and compatible models).
+- Just download a GGUF file and load it via LM Studio.
+
+### 📥 Model Downloader Built-In
+- Integrated with **Hugging Face** — browse and download models directly within the app.
+
+### 🧑‍💻 Developer-Friendly
+- Provides a **local server with OpenAI-compatible API**.
+- Easily connect with tools like **AutoGen**, **CrewAI**, **LangChain**, or your own apps — just like you would with OpenAI API.
+
+---
+
+## 🖥️ System Requirements
+- Available for **macOS** (Apple Silicon and Intel), **Windows**, and **Linux**.
+- The more RAM/GPU power you have, the larger the models you can run.
+
+---
+
+## 🧠 Example Use Cases
+- **Chat privately** with models like LLaMA 3, Mistral, or Phi-2 without sending data to the cloud.
+- Use **local LLMs in your own apps** using an OpenAI-style API.
+- Experiment with open-source models for research or development.
+
+---
+
+## 📥 How to Download
+- Visit the official site: [https://lmstudio.ai](https://lmstudio.ai)
+- Download for your operating system.
+- Install and start running models locally.
+
+---
+
+## Need Help?
+Let me know if you'd like:
+- ✅ Help setting it up  
+- 🧠 List of best models to use  
+- ⚙️ Integration with your own apps (e.g., Flask, FastAPI, etc.)
+
+### Here is sample model for Hugging face
+https://huggingface.co/hugging-quants/Llama-3.2-1B-Instruct-Q8_0-GGUF
