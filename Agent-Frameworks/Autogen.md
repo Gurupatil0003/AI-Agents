@@ -153,6 +153,52 @@ if __name__ == "__main__":
 
 
 ```
+# Travel Agent
+```python
+from autogen import ConversableAgent, UserProxyAgent
+
+# Ollama LLM config using DeepSeek
+llm_config = {
+    "model": "deepseek-r1:1.5b",
+    "base_url": "http://localhost:11434/v1",
+    "api_key": "ollama",
+    "timeout": 120,
+}
+
+# Travel Assistant Agent
+travelbuddy = ConversableAgent(
+    name="TravelBuddy",
+    llm_config=llm_config,
+    system_message=(
+        "You are TravelBuddy, an expert travel companion and planner. "
+        "You help users with travel suggestions, itineraries, visa information, "
+        "weather, packing tips, local culture, and budgeting. Answer clearly and concisely."
+    ),
+)
+
+# User agent
+user = UserProxyAgent(
+    name="User",
+    human_input_mode="ALWAYS",
+    max_consecutive_auto_reply=0,
+    code_execution_config={"use_docker": False},
+    is_termination_msg=lambda msg: "exit" in msg.get("content", "").lower(),
+)
+
+# Chat loop
+if __name__ == "__main__":
+    print("🧳 Start chatting with TravelBuddy! Type your travel question or 'exit' to quit.\n")
+
+    while True:
+        user_msg = input("👤 You: ")
+        if user_msg.strip().lower() == "exit":
+            print("👋 Safe travels! Chat ended.")
+            break
+
+        user.initiate_chat(travelbuddy, message=user_msg)
+
+
+```
 
 # LM Studio
 
