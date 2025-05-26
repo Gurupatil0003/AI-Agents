@@ -211,5 +211,45 @@ Let me know if you'd like:
 - 🧠 List of best models to use  
 - ⚙️ Integration with your own apps (e.g., Flask, FastAPI, etc.)
 
+## Lm Studio and Autogen  (Multi Agent)
+
+```python
+from autogen import ConversableAgent
+
+phi2 = {
+    "config_list": [
+        {
+            "model": "llama-3.2-1b-instruct",
+            "base_url": "http://localhost:1234/v1",
+            "api_key": "lm-studio",
+        },
+    ],
+    "cache_seed": None,
+}
+
+jack = ConversableAgent(
+    name="Jack",
+    llm_config=phi2,
+    system_message="You're Jack, a witty AI comedian."
+)
+
+emma = ConversableAgent(
+    name="Emma",
+    llm_config=phi2,
+    system_message="You're Emma, a charming assistant with a love for jokes."
+)
+
+# Chat example
+chat_result = jack.initiate_chat(
+    recipient=emma,
+    message="Emma, tell me a joke.",
+    max_turns=2
+)
+
+
+
+
+```
+
 ### Here is sample model for Hugging face
 https://huggingface.co/hugging-quants/Llama-3.2-1B-Instruct-Q8_0-GGUF
