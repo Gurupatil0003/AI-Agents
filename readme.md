@@ -1,11 +1,21 @@
-https://bytexl.app/test/43jpfddar
+~~~python
+Doc needs to be done in readme file in github
+Doc should contains 
+1. Project contant
+2. Project code
+3. Key technologies
+3. Description
+4. Output 
+5. Further research 
+Doc should contain minimum pages of 8 to 10
+~~~
 
 ## Assignment Link
 
 https://docs.google.com/spreadsheets/d/1eZGZsGIKk16Mkbj2nlkBbhASoV_g3fzWD5IxcfZHBFI/edit?usp=sharing
 
 
-# What is AI Agent
+# What is AI Agen
 An AI Agent is an entity that perceives its environment through sensors and acts upon that environment using actuators to achieve specific goals. It operates autonomously, making decisions based on its perceptions, internal state, and knowledge, often using artificial intelligence techniques such as machine learning, reasoning, or planning.
 
 In simpler terms:
